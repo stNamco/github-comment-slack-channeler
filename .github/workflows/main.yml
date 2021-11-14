@@ -11,7 +11,12 @@ jobs:
         id: hello
         uses: stNamco/github-comment-slack-channeler@v1
         with:
-          who-to-greet: 'Mona3 the Octocat'
+          slack_bot_token: 'test slack_bot_token'
+          slack_channel_id: 'test slack_channel_id'
+          comment_url_text: 'test comment_url_text'
+          slack_channeler_github_token: 'test slack_channeler_github_token'
+
+
       # `hello` ステップからの出力を使用する
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+      # - name: Get the output time
+      #   run: echo "The time was ${{ steps.hello.outputs.time }}"

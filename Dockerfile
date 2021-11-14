@@ -1,8 +1,8 @@
-# コードを実行するコンテナイメージ
-FROM alpine:3.10
+FROM python:3.9.7-slim
 
-# アクションのリポジトリからコードファイルをコンテナのファイルシステムパス `/`にコピー
-COPY entrypoint.sh /entrypoint.sh
+COPY unf_url.py /unf_url.py
 
-# dockerコンテナが起動する際に実行されるコードファイル (`entrypoint.sh`)
-ENTRYPOINT ["/entrypoint.sh"]
+COPY requirements.txt /requirements.txt
+RUN pip install -r requirements.txt
+
+CMD [ "python", "./unf_url.py"]
