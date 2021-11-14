@@ -1,15 +1,29 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  # who-to-greet:  # id of input
+  #   description: 'Who to greet'
+  #   required: true
+  slack_bot_token:
+    description: 'test'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  slack_channel_id:
+    description: 'test 1'
+    required: true
+  comment_url_text:
+    description: 'test 2'
+    required: true
+  slack_channeler_github_token:
+    description: 'test 3'
+    required: true
+# outputs:
+#   time: # id of output
+#     description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.slack_bot_token }}
+    - ${{ inputs.slack_channel_id }}
+    - ${{ inputs.comment_url_text }}
+    - ${{ inputs.slack_channeler_github_token }}
