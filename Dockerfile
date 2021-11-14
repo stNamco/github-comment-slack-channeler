@@ -5,4 +5,4 @@ COPY unf_url.py /unf_url.py
 COPY requirements.txt /requirements.txt
 RUN pip install -r requirements.txt
 
-CMD [ "python", "./unf_url.py"]
+ENTRYPOINT python /unf_url.py
