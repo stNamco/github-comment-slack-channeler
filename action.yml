@@ -1,24 +1,18 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'github-comment-slack-channeler'
+description: 'A job to share github comment as unfurl'
 inputs:
-  # who-to-greet:  # id of input
-  #   description: 'Who to greet'
-  #   required: true
   slack_bot_token:
-    description: 'test'
+    description: 'slack bot token'
     required: true
   slack_channel_id:
-    description: 'test 1'
+    description: 'slack channel id'
     required: true
   comment_url_text:
-    description: 'test 2'
+    description: 'github url of the comment'
     required: true
   slack_channeler_github_token:
-    description: 'test 3'
+    description: 'github token for fetch comment data'
     required: true
-# outputs:
-#   time: # id of output
-#     description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
