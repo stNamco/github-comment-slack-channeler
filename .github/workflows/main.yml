@@ -1,4 +1,10 @@
-on: [push]
+name: github comment slack channeler
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
 
 jobs:
   hello_world_job:
@@ -8,8 +14,9 @@ jobs:
       - name: unfurl action step
         id: hello
         uses: stNamco/github-comment-slack-channeler@6f9fa0f51c8b9abfb055b434ade21f6a88903bdc
+        if: contains(github.event.comment.body, '/share')
         with:
-          slack_bot_token: 'test-slack_bot_token'
-          slack_channel_id: 'test-slack_channel_id'
-          comment_url_text: 'test-comment_url_text'
-          slack_channeler_github_token: 'test-slack_channeler_github_token'
+          slack_bot_token: 'value-slack_bot_token'
+          slack_channel_id: 'value-slack_channel_id'
+          comment_url_text: 'value-comment_url_text'
+          slack_channeler_github_token: 'value-slack_channeler_github_token'
