@@ -1,3 +1,3 @@
 # github-comment-slack-channeler
 
-slack botだとprivate repositryのunfurlができなかったので作った。
+slack botだとprivate repositryのurl展開(unfurl)ができなかったので作った。
