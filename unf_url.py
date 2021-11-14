@@ -7,6 +7,8 @@ import sys
 
 args = sys.argv
 
+print(args)
+
 # 環境変数を参照
 SLACK_TOKEN = args[1]
 SLACK_CHANNEL_ID = args[2]
