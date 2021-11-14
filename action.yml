@@ -4,19 +4,15 @@ inputs:
   slack_bot_token:
     description: 'test'
     required: true
-    default: 'test'
   slack_channel_id:
     description: 'test 1'
     required: true
-    default: 'test'
   comment_url_text:
     description: 'test 2'
     required: true
-    default: 'test'
   slack_channeler_github_token:
     description: 'test 3'
     required: true
-    default: 'test'
 # outputs:
 #   time: # id of output
 #     description: 'The time we greeted you'

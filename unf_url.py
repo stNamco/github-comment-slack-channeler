@@ -9,6 +9,8 @@ args = sys.argv
 
 print("param >>>>")
 print(args)
+print(args[1])
+
 
 # 環境変数を参照
 SLACK_TOKEN = args[1]
