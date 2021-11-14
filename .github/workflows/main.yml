@@ -9,7 +9,7 @@ jobs:
       #   uses: actions/checkout@v2
       - name: Hello world action step
         id: hello
-        uses: stNamco/github-comment-slack-channeler
+        uses: stNamco/github-comment-slack-channeler@v1
         with:
           who-to-greet: 'Mona3 the Octocat'
       # `hello` ステップからの出力を使用する
