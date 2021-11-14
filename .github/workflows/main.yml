@@ -5,13 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello on mine
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      # - name: Checkout
+      #   uses: actions/checkout@v2
       - name: Hello world action step
         id: hello
-        uses: ./
+        uses: stNamco/github-comment-slack-channeler
         with:
-          who-to-greet: 'Mona2 the Octocat'
+          who-to-greet: 'Mona3 the Octocat'
       # `hello` ステップからの出力を使用する
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
