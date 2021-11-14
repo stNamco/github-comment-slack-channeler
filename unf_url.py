@@ -7,6 +7,7 @@ import sys
 
 args = sys.argv
 
+print("param >>>>")
 print(args)
 
 # 環境変数を参照
