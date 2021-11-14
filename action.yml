@@ -2,16 +2,16 @@ name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
   slack_bot_token:
-    description: 'test'
+    description: 'test0'
     required: true
   slack_channel_id:
-    description: 'test 1'
+    description: 'test1'
     required: true
   comment_url_text:
-    description: 'test 2'
+    description: 'test2'
     required: true
   slack_channeler_github_token:
-    description: 'test 3'
+    description: 'test3'
     required: true
 # outputs:
 #   time: # id of output
