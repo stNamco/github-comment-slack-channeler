@@ -12,10 +12,10 @@ jobs:
         # uses: stNamco/github-comment-slack-channeler@v1
         uses: ./
         with:
-          slack_bot_token: 'test slack_bot_token'
-          slack_channel_id: 'test slack_channel_id'
-          comment_url_text: 'test comment_url_text'
-          slack_channeler_github_token: 'test slack_channeler_github_token'
+          slack_bot_token: 'test-slack_bot_token'
+          slack_channel_id: 'test-slack_channel_id'
+          comment_url_text: 'test-comment_url_text'
+          slack_channeler_github_token: 'test-slack_channeler_github_token'
 
 
       # `hello` ステップからの出力を使用する
