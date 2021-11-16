@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-python /unfurl.py $1 $2 $3 $4
+python /unfurl.py $1 $2 $3 $4 $5 $6
