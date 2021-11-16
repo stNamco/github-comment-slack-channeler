@@ -67,7 +67,6 @@ class GithubService:
 
         return info
 
-
 class SlackService:
 
     @classmethod
