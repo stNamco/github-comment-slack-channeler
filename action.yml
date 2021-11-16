@@ -1,33 +1,40 @@
 name: 'github-comment-slack-channeler'
 description: 'A job to share github comment as unfurl'
 inputs:
-  slack_bot_token:
-    description: 'slack bot token'
-    required: true
-  slack_channel_id:
-    description: 'slack channel id'
-    required: true
-  comment_url:
-    description: 'github url of the comment'
-    required: true
-  comment_body:
-    description: 'github comment'
-    required: true
-  comment_author_icon_url:
-    description: 'github comment'
-    required: false
-    default: "https://user-images.githubusercontent.com/11131753/141990632-3de3aef0-083a-4a9c-9075-b9af4fa306c6.png"
-  comment_author_name:
-    description: 'github comment author'
-    default: 'github-comment-slack-channeler'
+  # slack_bot_token:
+  #   description: 'slack bot token'
+  #   required: true
+  # slack_channel_id:
+  #   description: 'slack channel id'
+  #   required: true
+  # comment_url:
+  #   description: 'github url of the comment'
+  #   required: true
+  # comment_body:
+  #   description: 'github comment'
+  #   required: true
+  # comment_author_icon_url:
+  #   description: 'github comment'
+  #   required: false
+  #   default: "https://user-images.githubusercontent.com/11131753/141990632-3de3aef0-083a-4a9c-9075-b9af4fa306c6.png"
+  # comment_author_name:
+  #   description: 'github comment author'
+  #   default: 'github-comment-slack-channeler'
+    who-to-greet:  # id of input
+      description: 'Who to greet'
+      required: true
+      default: 'World'
     
+# runs:
+#   using: 'docker'
+#   image: 'Dockerfile'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.slack_bot_token }}
-    - ${{ inputs.slack_channel_id }}
-    - ${{ inputs.comment_url }}
-    - ${{ inputs.comment_body }}
-    - ${{ inputs.comment_author_icon_url }}
-    - ${{ inputs.comment_author_name }}
+  using: 'node12'
+  main: 'index.js'
+  # args:
+  #   - ${{ inputs.slack_bot_token }}
+  #   - ${{ inputs.slack_channel_id }}
+  #   - ${{ inputs.comment_url }}
+  #   - ${{ inputs.comment_body }}
+  #   - ${{ inputs.comment_author_icon_url }}
+  #   - ${{ inputs.comment_author_name }}
