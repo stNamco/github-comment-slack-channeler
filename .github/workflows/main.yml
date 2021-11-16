@@ -17,7 +17,7 @@ jobs:
       - name: unfurl action step
         id: unfurl_comment
         # uses: ./
-        if: contains(github.event.comment.body, '/share')
+        # if: contains(github.event.comment.body, '/share')
         uses: stNamco/github-comment-slack-channeler@d5234b2dbd72f1919261499f1b37000a1fa84aef
         with:
           slack_bot_token: 'value-slack_bot_token'
