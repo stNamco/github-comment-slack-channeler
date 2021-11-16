@@ -1,23 +1,22 @@
-on: [push]
+name: github comment slack channeler
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
 
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: A job to say hello on mine
+    name: A job to share github comment as unfurl
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Hello world action step
-        id: hello
-        # uses: stNamco/github-comment-slack-channeler@v1
-        uses: ./
+      - name: unfurl action step
+        id: unfurl_comment
+        if: contains(github.event.comment.body, '/share')
+        uses: stNamco/github-comment-slack-channeler@6f9fa0f51c8b9abfb055b434ade21f6a88903bdc
         with:
-          slack_bot_token: 'test-slack_bot_token'
-          slack_channel_id: 'test-slack_channel_id'
-          comment_url_text: 'test-comment_url_text'
-          slack_channeler_github_token: 'test-slack_channeler_github_token'
-
-
-      # `hello` ステップからの出力を使用する
-      # - name: Get the output time
-      #   run: echo "The time was ${{ steps.hello.outputs.time }}"
+          slack_bot_token: 'value-slack_bot_token'
+          slack_channel_id: 'value-slack_channel_id'
+          comment_url_text: 'value-comment_url_text'
+          slack_channeler_github_token: 'value-slack_channeler_github_token'

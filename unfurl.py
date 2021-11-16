@@ -7,11 +7,6 @@ import sys
 
 args = sys.argv
 
-print("param >>>>")
-print(args)
-print(args[1])
-
-
 # 環境変数を参照
 SLACK_TOKEN = args[1]
 SLACK_CHANNEL_ID = args[2]
@@ -72,7 +67,6 @@ class GithubService:
 
         return info
 
-
 class SlackService:
 
     @classmethod
@@ -91,7 +85,6 @@ class SlackService:
     def call_post_unfurl(cls, url, ts, *args):
         unfurls = {}
         unfurls[url] = GithubService.create_unfurl(url)
-
         # Slackでurlを展開
         # https://slack.dev/python-slack-sdk/api-docs/slack_sdk/web/client.html
         slack_client = WebClient(token=SLACK_TOKEN)
