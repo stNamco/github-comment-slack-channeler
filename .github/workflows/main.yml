@@ -1,28 +1,23 @@
 name: github comment slack channeler
 
-# on:
-#   issue_comment:
-#     types: [created]
-#   pull_request_review_comment:
-#     types: [created]
-
-on: [push]
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
 
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
     name: A job to share github comment as unfurl
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v2
       - name: unfurl action step
         id: unfurl_comment
-        # uses: ./
-        # if: contains(github.event.comment.body, '/share')
-        uses: stNamco/github-comment-slack-channeler@7bad8efa5d0a2fc6affb42b5e636da11761b007c
+        if: contains(github.event.comment.body, '/share')
+        uses: stNamco/github-comment-slack-channeler@v0.0.2
         
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack_channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-          github_comment_url: "https://github.com/stNamco/github-comment-slack-channeler/pull/5#issuecomment-968210941"
+          github_comment_url: ${{ github.event.comment.html_url }}
