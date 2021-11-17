@@ -14,9 +14,6 @@ inputs:
     description: 'github comment url'
     required: true
 
-# runs:
-#   using: 'docker'
-#   image: 'Dockerfile'
 runs:
   using: 'node12'
   main: 'index.js'
