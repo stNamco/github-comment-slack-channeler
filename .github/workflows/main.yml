@@ -15,7 +15,6 @@ jobs:
         id: unfurl_comment
         if: contains(github.event.comment.body, '/share')
         uses: stNamco/github-comment-slack-channeler@v0.0.2
-        
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
