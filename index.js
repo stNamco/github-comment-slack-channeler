@@ -86,7 +86,7 @@ class SlackService {
   // NOTE: https://slack.dev/node-slack-sdk/web-api
 
   static async callPostChat(channelId, url, blocks) {
-    const client = new WebClient(core.getInput('slack_bot_token')
+    const client = new WebClient(core.getInput('slack_bot_token'))
     return await client.chat.postMessage({
       text: "質問や共有内容が追加されました!",
       channel: channelId,
