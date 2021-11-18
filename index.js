@@ -2,7 +2,8 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { WebClient } = require('@slack/web-api');
 
-async function createBlocks(url) {
+async function createBlocks(url, targetLabel) {
+
   const githubToken = core.getInput('github_token')
 
   function parseUrl(url) {
@@ -58,34 +59,41 @@ async function createBlocks(url) {
   const res = await fetchComment(params.owner,  params.repoName, params.type, params.typeId).catch(e => console.error(e));
   const comment = res.data
 
-  const blocks = [{
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": `*質問や共有内容が追加されました！by ${comment.user.login}*`
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": `${comment.body} \n\n <${url}|${params.owner}/${params.repoName}> | ${formatDate(comment.created_at)}`
+  return new Promise(function(resolve, reject) {  
+
+    if (!comment.body.includes(targetLabel)) {
+      reject("target label is not included")
+    }
+
+    const body = comment.body.startsWith(targetLabel) ? comment.body.slice(targetLabel.length) : comment.body;
+
+    const blocks = [{
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": `*質問や共有内容が追加されました！by ${comment.user.login}*`
+          }
         },
-        "accessory": {
-          "type": "image",
-          "image_url": comment.user.avatar_url,
-          "alt_text": "avatar image"
-        }
-      }]
-
-  return blocks
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": `${body} \n\n <${url}|${params.owner}/${params.repoName}> | ${formatDate(comment.created_at)}`
+          },
+          "accessory": {
+            "type": "image",
+            "image_url": comment.user.avatar_url,
+            "alt_text": "avatar image"
+          }
+        }]
+    resolve(blocks)
+  });  
 }
-
 class SlackService {
 
   // NOTE: https://slack.dev/node-slack-sdk/web-api
 
-  static async callPostChat(channelId, url, blocks) {
+  static async callPostChat(channelId, blocks) {
     const client = new WebClient(core.getInput('slack_bot_token'))
     return await client.chat.postMessage({
       text: "質問や共有内容が追加されました!",
@@ -98,7 +106,11 @@ class SlackService {
 (async () => {
   const githubCommentUrl = core.getInput('github_comment_url')
   const slackChannelId = core.getInput('slack_channel_id')
+  const targetLabel = core.getInput('target_label')
 
-  const blocks = await createBlocks(githubCommentUrl).catch(e => console.error(e));
-  await SlackService.callPostChat(slackChannelId, githubCommentUrl, blocks).catch(e => console.error(e));
+  createBlocks(githubCommentUrl, targetLabel).then(blocks => {
+    SlackService.callPostChat(slackChannelId, blocks).catch(e => console.error(e));
+  }, error => {
+    console.log(error)
+  });
 })();
