@@ -93,6 +93,7 @@ class SlackService {
   const slackChannelId = core.getInput('slack_channel_id')
 
   const resPostChat = await SlackService.callPostChat(slackChannelId, githubCommentUrl).catch(e => console.error(e));
+  console.log(resPostChat);
   const unfurl = await createUnfurl(githubCommentUrl).catch(e => console.error(e));
   const unfurls = {[githubCommentUrl]: unfurl}
   console.log(unfurls);
