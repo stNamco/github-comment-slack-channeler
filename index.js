@@ -97,5 +97,6 @@ class SlackService {
   const unfurl = await createUnfurl(githubCommentUrl).catch(e => console.error(e));
   const unfurls = {[githubCommentUrl]: unfurl}
   console.log(unfurls);
-  await SlackService.callUnfurl(slackChannelId, unfurls, resPostChat.message.ts).catch(e => console.error(e));
+  const res = await SlackService.callUnfurl(slackChannelId, unfurls, resPostChat.message.ts).catch(e => console.error(e));
+  console.log(res);
 })();
