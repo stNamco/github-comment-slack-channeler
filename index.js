@@ -48,7 +48,6 @@ async function createUnfurl(url) {
 
   const params = parseUrl(url)
   const res = await fetchComment(params.owner,  params.repoName, params.type, params.typeId).catch(e => console.error(e));
-  console.log(res);
   const comment = res.data
 
   const info = {
@@ -83,7 +82,7 @@ class SlackService {
       ts: ts,
       unfurls: unfurls
     }
-    console.log(param)
+    console.log(param);
     return await SlackService.client.chat.unfurl(param)
   }
 }
