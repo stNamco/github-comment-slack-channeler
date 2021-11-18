@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { WebClient } = require('@slack/web-api');
 
-async function createUnfurl(url) {
+async function createBlocks(url) {
   const githubToken = core.getInput('github_token')
 
   function parseUrl(url) {
@@ -46,45 +46,52 @@ async function createUnfurl(url) {
     }
   }
 
+  function formatDate(dateString) {
+    date = new Date(dateString)
+    var y = date.getFullYear();
+    var m = ('00' + (date.getMonth()+1)).slice(-2);
+    var d = ('00' + date.getDate()).slice(-2);
+    return (y + '/' + m + '/' + d);
+  }
+
   const params = parseUrl(url)
   const res = await fetchComment(params.owner,  params.repoName, params.type, params.typeId).catch(e => console.error(e));
   const comment = res.data
-  const ts = new Date(comment.created_at).getTime()
 
-  const info = {
-      "title": params.type,
-      "title_link": url,
-      "author_name": comment.user.login,
-      "author_icon": comment.user.avatar_url,
-      "text": comment.body,
-      "ts": ts
-  }
-  return info
+  const blocks = [{
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": `*質問や共有内容が追加されました！by ${comment.user.login}*`
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": `${comment.body} \n\n <${url}|${params.owner}/${params.repoName}> | ${formatDate(comment.created_at)}`
+        },
+        "accessory": {
+          "type": "image",
+          "image_url": comment.user.avatar_url,
+          "alt_text": "avatar image"
+        }
+      }]
+
+  return blocks
 }
 
 class SlackService {
 
   // NOTE: https://slack.dev/node-slack-sdk/web-api
 
-  static get client() {
-    return new WebClient(core.getInput('slack_bot_token'))
-  }
-
-  static async callPostChat(channelId, url) {
-    return await SlackService.client.chat.postMessage({
-      text: url,
+  static async callPostChat(channelId, url, blocks) {
+    const client = new WebClient(core.getInput('slack_bot_token')
+    return await client.chat.postMessage({
+      text: "質問や共有内容が追加されました!",
       channel: channelId,
+      blocks: blocks
     });
-  }
-
-  static async callUnfurl(channelId, unfurls, ts) {
-    const param = {
-      channel: channelId,
-      ts: ts,
-      unfurls: unfurls
-    }
-    console.log(param);
-    return await SlackService.client.chat.unfurl(param)
   }
 }
 
@@ -92,11 +99,6 @@ class SlackService {
   const githubCommentUrl = core.getInput('github_comment_url')
   const slackChannelId = core.getInput('slack_channel_id')
 
-  const resPostChat = await SlackService.callPostChat(slackChannelId, githubCommentUrl).catch(e => console.error(e));
-  console.log(resPostChat);
-  const unfurl = await createUnfurl(githubCommentUrl).catch(e => console.error(e));
-  const unfurls = {[githubCommentUrl]: unfurl}
-  console.log(unfurls);
-  const res = await SlackService.callUnfurl(slackChannelId, unfurls, resPostChat.message.ts).catch(e => console.error(e));
-  console.log(res);
+  const blocks = await createBlocks(githubCommentUrl).catch(e => console.error(e));
+  await SlackService.callPostChat(slackChannelId, githubCommentUrl, blocks).catch(e => console.error(e));
 })();
