@@ -77,11 +77,13 @@ class SlackService {
   }
 
   static async callUnfurl(channelId, unfurls, ts) {
-    return await SlackService.client.chat.unfurl({
+    const param = {
       channel: channelId,
       ts: ts,
       unfurls: unfurls
-    })
+    }
+    console.log(param)
+    return await SlackService.client.chat.unfurl(param)
   }
 }
 
