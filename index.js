@@ -48,6 +48,7 @@ async function createUnfurl(url) {
 
   const params = parseUrl(url)
   const res = await fetchComment(params.owner,  params.repoName, params.type, params.typeId).catch(e => console.error(e));
+  console.log(res);
   const comment = res.data
 
   const info = {
@@ -94,5 +95,6 @@ class SlackService {
   const resPostChat = await SlackService.callPostChat(slackChannelId, githubCommentUrl).catch(e => console.error(e));
   const unfurl = await createUnfurl(githubCommentUrl).catch(e => console.error(e));
   const unfurls = {[githubCommentUrl]: unfurl}
+  console.log(unfurls);
   await SlackService.callUnfurl(slackChannelId, unfurls, resPostChat.message.ts).catch(e => console.error(e));
 })();
