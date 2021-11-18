@@ -13,6 +13,9 @@ inputs:
   github_comment_url:
     description: 'github comment url'
     required: true
+  target_label:
+    description: 'if the label is included, then do this job.'
+    required: true
 
 runs:
   using: 'node12'
