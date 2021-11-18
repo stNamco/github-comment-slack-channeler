@@ -49,6 +49,7 @@ async function createUnfurl(url) {
   const params = parseUrl(url)
   const res = await fetchComment(params.owner,  params.repoName, params.type, params.typeId).catch(e => console.error(e));
   const comment = res.data
+  const ts = new Date(comment.created_at).getTime()
 
   const info = {
       "title": params.type,
@@ -56,7 +57,7 @@ async function createUnfurl(url) {
       "author_name": comment.user.login,
       "author_icon": comment.user.avatar_url,
       "text": comment.body,
-      "ts": new Date(comment.created_at).getTime()
+      "ts": ts
   }
   return info
 }
