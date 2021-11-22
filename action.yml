@@ -7,16 +7,16 @@ inputs:
   slack_bot_token:
     description: 'slack bot token'
     required: true
-  slack_channel_id:
-    description: 'slack channel id'
-    required: true
   github_comment_url:
     description: 'github comment url'
     required: true
-  target_label:
-    description: 'if the label is included, then do this job.'
+  channeler_target_config:
+    description: 'if these key are included, then do this job.'
     required: true
-
+  unfurl_links_context:
+    description: 'if this key is true, then unfurl github comment url which is in body text'
+    required: false
+    default: false
 runs:
   using: 'node12'
   main: 'index.js'
