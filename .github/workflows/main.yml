@@ -11,12 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to share github comment as unfurl
     steps:
+      # - name: Checkout
+      #   uses: actions/checkout@v2
       - name: unfurl action step
         id: unfurl_comment
-        uses: stNamco/github-comment-slack-channeler@a492f87fd793acd7458ef6d4e97c1281dda6109d
+        uses: stNamco/github-comment-slack-channeler@v0.0.4
+        # uses: ./
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack_channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
           github_comment_url: ${{ github.event.comment.html_url }}
-          target_label: "/share"
+          channeler_target_config: '{"/share":"channelid"}'
+          unfurl_links_context: true
+
