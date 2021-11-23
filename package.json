@@ -6,7 +6,8 @@
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0",
-    "@slack/web-api": "^6.5.0"
+    "@slack/web-api": "^6.5.0",
+    "typescript": "^4.5.2"
   },
   "devDependencies": {},
   "scripts": {
